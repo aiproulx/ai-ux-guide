@@ -1,263 +1,246 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
-</head>
-<body>
-<p class="p1">import React, { useState } from 'react';</p>
-<p class="p1">import { Lightbulb, Settings, Repeat, MessageSquareText, Zap, ShieldCheck, Speech, Users, Telescope } from 'lucide-react';</p>
-<p class="p2"><br></p>
-<p class="p1">// Main App component</p>
-<p class="p1">const App = () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">  </span>// State to manage the currently selected pattern for the modal</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const [selectedPattern, setSelectedPattern] = useState(null);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>// Data for each Generative AI UX Pattern, mimicking the diagrams and their descriptions</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const patterns = [</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>id: 'contextual-input',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>title: 'Contextual Input',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>concept: 'Users provide context (text, image, audio, etc.). AI generates based on this.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>description: 'This pattern involves the user providing specific input that acts as context for the AI\'s generation. The AI then processes this context to produce a relevant output. The quality and specificity of the input directly influence the output.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>examples: [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Midjourney: Users input text prompts to generate images.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Text-to-code generators: Developers describe desired code functionality in natural language.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Creating images from scribbles: AI interprets rough sketches to produce polished illustrations.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Voice-to-text systems: Users speak, and AI transcribes their words into written text.'</p>
-<p class="p1"><span class="Apple-converted-space">      </span>],</p>
-<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;MessageSquareText className="h-8 w-8 text-indigo-500" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>},</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>id: 'dynamic-output',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>title: 'Dynamic Output',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>concept: 'AI output changes based on user interaction or input.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>description: 'Dynamic output refers to the AI\'s ability to adapt or modify its generated content in real-time based on user feedback or further input. This allows for iterative refinement and personalization.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>examples: [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Rewriting an email: AI rewrites a draft email based on user-selected tones (e.g., "formal," "casual," "urgent").',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Generating variations of an image: Users click a button to see different stylistic or compositional versions of an initial AI-generated image.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Interactive story generation: The storyline evolves based on choices made by the user.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Code refactoring suggestions: AI suggests code improvements that update dynamically as the user edits their code.'</p>
-<p class="p1"><span class="Apple-converted-space">      </span>],</p>
-<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Repeat className="h-8 w-8 text-green-500" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>},</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>id: 'human-in-the-loop',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>title: 'Human-in-the-Loop Feedback',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>concept: 'User provides feedback to refine AI output.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>description: 'This pattern emphasizes the crucial role of human oversight and feedback in improving AI-generated content. Users actively review, evaluate, and provide corrections or preferences to guide the AI\'s learning and future generations.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>examples: [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Correcting AI-generated code: Developers directly edit AI-suggested code snippets, and the AI learns from these corrections.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Thumbs up/down ratings: Users rate AI-generated text or images, implicitly teaching the model preferred styles or content.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Direct editing of generated text: Users can highlight and modify parts of an AI-written document, providing explicit feedback.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Fine-tuning image prompts: Artists iterate on prompts, adding or removing details based on initial AI outputs until the desired image is produced.'</p>
-<p class="p1"><span class="Apple-converted-space">      </span>],</p>
-<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Users className="h-8 w-8 text-blue-500" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>},</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>id: 'interpretive-guidance',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>title: 'Interpretive Guidance',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>concept: 'AI helps users understand its capabilities or generated content.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>description: 'Interpretive guidance focuses on enhancing user understanding of the AI system itself, its limitations, and the rationale behind its outputs. This builds trust and helps users interact more effectively.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>examples: [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Suggesting how to rephrase a prompt: AI provides tips on making prompts clearer or more effective for better results.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Explaining why certain results were generated: A search AI might explain the ranking factors for its results.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Detailing where AI information came from: A content generation AI might cite sources for facts it included.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Highlighting AI limitations: The system informs users when a request might be beyond its current capabilities or prone to errors.'</p>
-<p class="p1"><span class="Apple-converted-space">      </span>],</p>
-<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Lightbulb className="h-8 w-8 text-yellow-500" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>},</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>id: 'proactive-assistance',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>title: 'Proactive Assistance',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>concept: 'AI anticipates needs and offers relevant suggestions.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>description: 'This pattern describes AI systems that actively monitor user activity or context and anticipate potential needs, offering helpful suggestions or completing tasks before being explicitly asked.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>examples: [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Predictive text and auto-completion in typing interfaces.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Email auto-replies or suggested quick responses based on message content.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Smart scheduling tools that suggest meeting times based on calendar availability.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Content suggestions in streaming apps based on viewing history and preferences.'</p>
-<p class="p1"><span class="Apple-converted-space">      </span>],</p>
-<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Zap className="h-8 w-8 text-orange-500" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>},</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>id: 'explainable-ai',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>title: 'Explainable AI (XAI)',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>concept: 'AI clarifies its reasoning or decision-making process.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>description: 'XAI is about making AI models transparent and understandable. It allows users to comprehend *why* an AI made a particular decision or generated a specific output, fostering trust and accountability.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>examples: [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Explaining why a loan application was denied: The AI outlines the key financial factors that led to the rejection.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Detailing factors for a medical diagnosis: An AI diagnostic tool highlights symptoms and test results that influenced its conclusion.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Showing how a deepfake was created: An AI tool demonstrates the steps or algorithms used to generate manipulated media.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Providing feature importance in a predictive model: Displaying which input features had the most impact on a prediction.'</p>
-<p class="p1"><span class="Apple-converted-space">      </span>],</p>
-<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Telescope className="h-8 w-8 text-red-500" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>},</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>id: 'multi-modal-interaction',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>title: 'Multi-Modal Interaction',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>concept: 'AI interacts using various input/output modalities (text, voice, image).',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>description: 'This pattern involves AI systems that can process and generate information across multiple sensory modalities simultaneously. Users can interact using combinations of text, voice, images, gestures, etc.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>examples: [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Generating text from images: AI describes the content of an image in written form.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Describing an image using voice: Users can ask questions about an image, and the AI responds verbally.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'A conversational AI that understands both typed text and spoken speech and can generate responses in both formats.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'AI assistants that can process gestures or facial expressions as input.'</p>
-<p class="p1"><span class="Apple-converted-space">      </span>],</p>
-<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Speech className="h-8 w-8 text-purple-500" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>},</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>id: 'user-control-customization',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>title: 'User Control &amp; Customization',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>concept: 'Users can tailor AI behavior and output.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>description: 'This pattern empowers users by providing them with granular control over the AI\'s behavior, preferences, and the characteristics of its generated output. It moves beyond passive consumption to active shaping of the AI experience.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>examples: [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Adjusting generative image style: Users can select from presets or fine-tune parameters like "photorealistic," "abstract," "cartoonish."',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Setting safety filters: Users can enable or disable content filters for AI-generated text or images.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Defining persona for a chatbot: Users can specify if the chatbot should be "friendly," "professional," "humorous," etc.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Training custom AI models: Users can provide their own data to specialize an AI for a particular task or domain.'</p>
-<p class="p1"><span class="Apple-converted-space">      </span>],</p>
-<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;Settings className="h-8 w-8 text-cyan-500" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>},</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>id: 'ethical-ai-bias-mitigation',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>title: 'Ethical AI &amp; Bias Mitigation',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>concept: 'Designing AI to be fair, accountable, and transparent.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>description: 'This pattern focuses on the critical design considerations to ensure AI systems are developed and used responsibly, addressing issues like fairness, privacy, accountability, and the reduction of harmful biases in generated content.',</p>
-<p class="p1"><span class="Apple-converted-space">      </span>examples: [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Fairness dashboards: Tools that allow developers to monitor and mitigate biases in AI model outputs.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Bias detection tools: Automated systems that flag potentially biased language or imagery generated by AI.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Privacy-preserving AI: Techniques like federated learning or differential privacy used to protect user data while training AI models.',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>'Transparency reports: Public documentation detailing an AI system\'s ethical guidelines, data sources, and known limitations regarding bias.'</p>
-<p class="p1"><span class="Apple-converted-space">      </span>],</p>
-<p class="p1"><span class="Apple-converted-space">      </span>icon: &lt;ShieldCheck className="h-8 w-8 text-pink-500" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>return (</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className="min-h-screen bg-gray-100 p-4 font-inter text-gray-800"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="max-w-6xl mx-auto py-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1 className="text-4xl font-bold text-center mb-8 text-indigo-700"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>Generative AI UX Design Patterns</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p className="text-center text-lg text-gray-600 mb-12"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>Click on any pattern below to view its full description and examples.</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{patterns.map((pattern) =&gt; (</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;PatternCard</p>
-<p class="p1"><span class="Apple-converted-space">              </span>key={pattern.id}</p>
-<p class="p1"><span class="Apple-converted-space">              </span>pattern={pattern}</p>
-<p class="p1"><span class="Apple-converted-space">              </span>onClick={() =&gt; setSelectedPattern(pattern)}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>))}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>{selectedPattern &amp;&amp; (</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;PatternModal</p>
-<p class="p1"><span class="Apple-converted-space">            </span>pattern={selectedPattern}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>onClose={() =&gt; setSelectedPattern(null)}</p>
-<p class="p1"><span class="Apple-converted-space">          </span>/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>)}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>);</p>
-<p class="p1">};</p>
-<p class="p2"><br></p>
-<p class="p1">// PatternCard component to display each pattern as a clickable card</p>
-<p class="p1">const PatternCard = ({ pattern, onClick }) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return (</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div</p>
-<p class="p1"><span class="Apple-converted-space">      </span>className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center cursor-pointer</p>
-<p class="p1"><span class="Apple-converted-space">                 </span>hover:shadow-xl hover:scale-[1.02] transition-all duration-300 transform</p>
-<p class="p1"><span class="Apple-converted-space">                 </span>border border-gray-200"</p>
-<p class="p1"><span class="Apple-converted-space">      </span>onClick={onClick}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="mb-4 flex items-center justify-center rounded-full bg-indigo-50 p-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{pattern.icon}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2 className="text-xl font-semibold text-gray-900 mb-2"&gt;{pattern.title}&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p className="text-gray-600 text-sm"&gt;{pattern.concept}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>);</p>
-<p class="p1">};</p>
-<p class="p2"><br></p>
-<p class="p1">// PatternModal component to display the detailed description in a modal</p>
-<p class="p1">const PatternModal = ({ pattern, onClose }) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if (!pattern) return null;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>return (</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-8 relative</p>
-<p class="p1"><span class="Apple-converted-space">                      </span>transform transition-all duration-300 scale-95 opacity-0 animate-scaleIn"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button</p>
-<p class="p1"><span class="Apple-converted-space">          </span>className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-light leading-none</p>
-<p class="p1"><span class="Apple-converted-space">                     </span>focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-full w-8 h-8 flex items-center justify-center"</p>
-<p class="p1"><span class="Apple-converted-space">          </span>onClick={onClose}</p>
-<p class="p1"><span class="Apple-converted-space">          </span>aria-label="Close"</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&amp;times;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="flex items-center mb-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="mr-4 flex items-center justify-center rounded-full bg-indigo-100 p-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{pattern.icon}</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;h2 className="text-2xl font-bold text-gray-900"&gt;{pattern.title}&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="max-h-[70vh] overflow-y-auto pr-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;p className="text-gray-700 mb-6 leading-relaxed"&gt;{pattern.description}&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;h3 className="text-lg font-semibold text-gray-800 mb-3"&gt;Examples:&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;ul className="list-disc list-inside text-gray-600 space-y-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>{pattern.examples.map((example, index) =&gt; (</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;li key={index} className="pl-2"&gt;{example}&lt;/li&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>))}</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/ul&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>);</p>
-<p class="p1">};</p>
-<p class="p2"><br></p>
-<p class="p1">// CSS for the modal animation</p>
-<p class="p1">const style = `</p>
-<p class="p1"><span class="Apple-converted-space">  </span>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.font-inter {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Inter', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>@keyframes scaleIn {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>from {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transform: scale(0.95);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>opacity: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>to {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transform: scale(1);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>opacity: 1;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.animate-scaleIn {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>animation: scaleIn 0.3s ease-out forwards;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1">`;</p>
-<p class="p2"><br></p>
-<p class="p1">// Inject the style into the document head</p>
-<p class="p1">const styleTag = document.createElement('style');</p>
-<p class="p1">styleTag.innerHTML = style;</p>
-<p class="p1">document.head.appendChild(styleTag);</p>
-<p class="p2"><br></p>
-<p class="p1">export default App;</p>
-</body>
-</html>
+import React, { useState } from 'react';
+import {
+  Lightbulb,
+  Settings,
+  Repeat,
+  MessageSquareText,
+  Zap,
+  ShieldCheck,
+  Speech,
+  Users,
+  Telescope,
+} from 'lucide-react';
+
+// Main App component
+const App = () => {
+  // State to manage the currently selected pattern for the modal
+  const [selectedPattern, setSelectedPattern] = useState(null);
+
+  // Data for each Generative AI UX Pattern, mimicking the diagrams and their descriptions
+  const patterns = [
+    {
+      id: 'contextual-input',
+      title: 'Contextual Input',
+      concept: 'Users provide context (text, image, audio, etc.). AI generates based on this.',
+      description:
+        "This pattern involves the user providing specific input that acts as context for the AI's generation. The AI then processes and produces an output tailored to this context.",
+      examples: [
+        'Midjourney: Users input text prompts to generate images.',
+        'Text-to-code generators: Developers describe desired code functionality in natural language.',
+        'Creating images from scribbles: AI interprets rough sketches to produce polished illustrations.',
+        'Voice-to-text systems: Users speak, and AI transcribes their words into written text.',
+      ],
+      icon: <MessageSquareText className="h-8 w-8 text-indigo-500" />,
+    },
+    {
+      id: 'dynamic-output',
+      title: 'Dynamic Output',
+      concept: 'AI output changes based on user interaction or input.',
+      description:
+        "Dynamic output refers to the AI's ability to adapt or modify its generated content in real-time based on user feedback or additional input.",
+      examples: [
+        'Rewriting an email: AI rewrites a draft email based on user-selected tones (e.g., "formal," "casual," "urgent").',
+        'Generating variations of an image: Users click a button to see different stylistic or compositional versions of an initial AI-generated image.',
+        'Interactive story generation: The storyline evolves based on choices made by the user.',
+        'Code refactoring suggestions: AI suggests code improvements that update dynamically as the user edits their code.',
+      ],
+      icon: <Repeat className="h-8 w-8 text-green-500" />,
+    },
+    {
+      id: 'human-in-the-loop',
+      title: 'Human-in-the-Loop Feedback',
+      concept: 'User provides feedback to refine AI output.',
+      description:
+        'This pattern emphasizes the crucial role of human oversight and feedback in improving AI-generated content. Users actively correct, rate, or edit outputs.',
+      examples: [
+        'Correcting AI-generated code: Developers directly edit AI-suggested code snippets, and the AI learns from these corrections.',
+        'Thumbs up/down ratings: Users rate AI-generated text or images, implicitly teaching the model preferred styles or content.',
+        'Direct editing of generated text: Users can highlight and modify parts of an AI-written document, providing explicit feedback.',
+        'Fine-tuning image prompts: Artists iterate on prompts, adding or removing details based on initial AI outputs until the desired image is achieved.',
+      ],
+      icon: <Users className="h-8 w-8 text-blue-500" />,
+    },
+    {
+      id: 'interpretive-guidance',
+      title: 'Interpretive Guidance',
+      concept: 'AI helps users understand its capabilities or generated content.',
+      description:
+        "Interpretive guidance focuses on enhancing user understanding of the AI system itself, its limitations, and the rationale behind outputs.",
+      examples: [
+        'Suggesting how to rephrase a prompt: AI provides tips on making prompts clearer or more effective for better results.',
+        'Explaining why certain results were generated: A search AI might explain the ranking factors for its results.',
+        'Detailing where AI information came from: A content generation AI might cite sources for facts it included.',
+        'Highlighting AI limitations: The system informs users when a request might be beyond its current capabilities or prone to errors.',
+      ],
+      icon: <Lightbulb className="h-8 w-8 text-yellow-500" />,
+    },
+    {
+      id: 'proactive-assistance',
+      title: 'Proactive Assistance',
+      concept: 'AI anticipates needs and offers relevant suggestions.',
+      description:
+        'This pattern describes AI systems that actively monitor user activity or context and anticipate potential needs, offering suggestions before being asked.',
+      examples: [
+        'Predictive text and auto-completion in typing interfaces.',
+        'Email auto-replies or suggested quick responses based on message content.',
+        'Smart scheduling tools that suggest meeting times based on calendar availability.',
+        'Content suggestions in streaming apps based on viewing history and preferences.',
+      ],
+      icon: <Zap className="h-8 w-8 text-orange-500" />,
+    },
+    {
+      id: 'explainable-ai',
+      title: 'Explainable AI (XAI)',
+      concept: 'AI clarifies its reasoning or decision-making process.',
+      description:
+        'XAI is about making AI models transparent and understandable. It allows users to comprehend *why* an AI made a particular decision or produced a specific output.',
+      examples: [
+        'Explaining why a loan application was denied: The AI outlines the key financial factors that led to the rejection.',
+        'Detailing factors for a medical diagnosis: An AI diagnostic tool highlights symptoms and test results that influenced its conclusion.',
+        'Showing how a deepfake was created: An AI tool demonstrates the steps or algorithms used to generate manipulated media.',
+        'Providing feature importance in a predictive model: Displaying which input features had the most impact on a prediction.',
+      ],
+      icon: <Telescope className="h-8 w-8 text-red-500" />,
+    },
+    {
+      id: 'multi-modal-interaction',
+      title: 'Multi-Modal Interaction',
+      concept: 'AI interacts using various input/output modalities (text, voice, image).',
+      description:
+        'This pattern involves AI systems that can process and generate information across multiple sensory modalities simultaneously or interchangeably.',
+      examples: [
+        'Generating text from images: AI describes the content of an image in written form.',
+        'Describing an image using voice: Users can ask questions about an image, and the AI responds verbally.',
+        'A conversational AI that understands both typed text and spoken speech and can generate responses in both formats.',
+        'AI assistants that can process gestures or facial expressions as input.',
+      ],
+      icon: <Speech className="h-8 w-8 text-purple-500" />,
+    },
+    {
+      id: 'user-control-customization',
+      title: 'User Control & Customization',
+      concept: 'Users can tailor AI behavior and output.',
+      description:
+        "This pattern empowers users by providing them with granular control over the AI's behavior, preferences, and the characteristics of generated content.",
+      examples: [
+        'Adjusting generative image style: Users can select from presets or fine-tune parameters like "photorealistic," "abstract," "cartoon," etc.',
+        'Setting safety filters: Users can enable or disable content filters for AI-generated text or images.',
+        'Defining persona for a chatbot: Users can specify if the chatbot should be "friendly," "professional," "humorous," etc.',
+        'Training custom AI models: Users can provide their own data to specialize an AI for a particular task or domain.',
+      ],
+      icon: <Settings className="h-8 w-8 text-cyan-500" />,
+    },
+    {
+      id: 'ethical-ai-bias-mitigation',
+      title: 'Ethical AI & Bias Mitigation',
+      concept: 'Designing AI to be fair, accountable, and transparent.',
+      description:
+        "This pattern focuses on the critical design considerations to ensure AI systems are developed and used responsibly, addressing biases and promoting fairness.",
+      examples: [
+        'Fairness dashboards: Tools that allow developers to monitor and mitigate biases in AI model outputs.',
+        'Bias detection tools: Automated systems that flag potentially biased language or imagery generated by AI.',
+        'Privacy-preserving AI: Techniques like federated learning or differential privacy used to protect user data while training AI models.',
+        "Transparency reports: Public documentation detailing an AI system's ethical guidelines, data sources, and known limitations regarding bias.",
+      ],
+      icon: <ShieldCheck className="h-8 w-8 text-pink-500" />,
+    },
+  ];
+
+  // Inject custom font and animation styles
+  React.useEffect(() => {
+    const style = `
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      .font-inter { font-family: 'Inter', sans-serif; }
+      @keyframes scaleIn {
+        from { transform: scale(0.95); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+      .animate-scaleIn { animation: scaleIn 0.3s ease-out forwards; }
+    `;
+    const styleTag = document.createElement('style');
+    styleTag.innerHTML = style;
+    document.head.appendChild(styleTag);
+    return () => {
+      document.head.removeChild(styleTag);
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-4 font-inter text-gray-800">
+      <div className="max-w-6xl mx-auto py-8">
+        <h1 className="text-4xl font-bold text-center mb-8 text-indigo-700">
+          Generative AI UX Design Patterns
+        </h1>
+        <p className="text-center text-lg text-gray-600 mb-12">
+          Click on any pattern below to view its full description and examples.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {patterns.map((pattern) => (
+            <PatternCard
+              key={pattern.id}
+              pattern={pattern}
+              onClick={() => setSelectedPattern(pattern)}
+            />
+          ))}
+        </div>
+        {selectedPattern && (
+          <PatternModal
+            pattern={selectedPattern}
+            onClose={() => setSelectedPattern(null)}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+// PatternCard component to display each pattern as a clickable card
+const PatternCard = ({ pattern, onClick }) => (
+  <div
+    className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300 transform border border-gray-200"
+    onClick={onClick}
+  >
+    <div className="mb-4 flex items-center justify-center rounded-full bg-indigo-50 p-3">
+      {pattern.icon}
+    </div>
+    <h2 className="text-xl font-semibold text-gray-900 mb-2">{pattern.title}</h2>
+    <p className="text-gray-600 text-sm">{pattern.concept}</p>
+  </div>
+);
+
+// PatternModal component to display the detailed description in a modal
+const PatternModal = ({ pattern, onClose }) => {
+  if (!pattern) return null;
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-8 relative transform transition-all duration-300 scale-95 opacity-0 animate-scaleIn">
+        <button
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-light leading-none focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-full w-8 h-8 flex items-center justify-center"
+          onClick={onClose}
+          aria-label="Close"
+        >
+          &times;
+        </button>
+        <div className="flex items-center mb-6">
+          <div className="mr-4 flex items-center justify-center rounded-full bg-indigo-100 p-3">
+            {pattern.icon}
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900">{pattern.title}</h2>
+        </div>
+        <div className="max-h-[70vh] overflow-y-auto pr-2">
+          <p className="text-gray-700 mb-6 leading-relaxed">{pattern.description}</p>
+          <h3 className="text-lg font-semibold text-gray-800 mb-3">Examples:</h3>
+          <ul className="list-disc list-inside text-gray-600 space-y-2">
+            {pattern.examples.map((example, index) => (
+              <li key={index} className="pl-2">
+                {example}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;
