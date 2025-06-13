@@ -1,322 +1,305 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI UX Patterns Interactive Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!--
+    Chosen Palette: Calm Harmony (Warm Neutrals & Subtle Teals)
+    Application Structure Plan: A focused single-page application primarily designed around an interactive "Pattern Explorer". It includes a hero, navigation, explorer grid, and modal details.
+    Visualization & Content Choices:
+    - Hero Section: Goal: Inform. Method: Textual introduction. Justification: Sets context for the entire guide.
+    - Pattern Explorer: Goal: Organize & Explore. Method: Filterable grid of cards. Interaction: Category filter buttons for display; click for details.
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+  -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb; /* Lightest neutral */
+    }
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #0d9488; /* Teal-600 */
+      transition: width 0.3s ease;
+    }
+    .nav-link.active,
+    .nav-link:hover {
+      color: #0d9488;
+    }
+    .nav-link.active::after,
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .pattern-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .pattern-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    .modal-bg {
+      transition: opacity 0.3s ease;
+    }
+    .modal-content {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .filter-btn.active {
+      background-color: #0d9488;
+      color: white;
+    }
   </style>
 </head>
-<body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en" class="scroll-smooth"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;AI UX Patterns Interactive Guide&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!--<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>Chosen Palette: Calm Harmony (Warm Neutrals &amp; Subtle Teals)</p>
-<p class="p1"><span class="Apple-converted-space">    </span>Application Structure Plan: A focused single-page application primarily designed around an interactive "Pattern Explorer". It includes a concise introductory section, followed by the main interactive grid of AI UX patterns. Users can filter patterns by category (Input, Output, Trust, Guiding) and click on individual pattern cards to view detailed definitions in a modal. This structure was chosen to make the key information (the patterns themselves) highly discoverable and easy to digest, directly supporting the user's goal of understanding different AI UX patterns.</p>
-<p class="p1"><span class="Apple-converted-space">    </span>Visualization &amp; Content Choices:</p>
-<p class="p1"><span class="Apple-converted-space">    </span>- Hero Section: Goal: Inform. Method: Textual introduction. Justification: Sets context for the entire guide.</p>
-<p class="p1"><span class="Apple-converted-space">    </span>- Pattern Explorer: Goal: Organize &amp; Explore. Method: Filterable grid of cards. Interaction: Category filter buttons for display; click on cards for modal with full pattern details. Justification: Effectively manages a list of categorized items, providing both an overview and granular detail on demand, making it the core interactive element for pattern discovery.</p>
-<p class="p1"><span class="Apple-converted-space">    </span>CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f9fafb; /* Lightest neutral */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.nav-link {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: color 0.3s ease;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.nav-link::after {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>content: '';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 2px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>bottom: -4px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>left: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transform: translateX(-50%);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: #0d9488; /* Teal-600 */</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: width 0.3s ease;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.nav-link.active, .nav-link:hover {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #0d9488;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.nav-link.active::after, .nav-link:hover::after {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.pattern-card {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.3s ease, box-shadow 0.3s ease;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.pattern-card:hover {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-5px);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal-bg {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: opacity 0.3s ease;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal-content {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.3s ease, opacity 0.3s ease;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.filter-btn.active {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: #0d9488;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body class="bg-stone-50 text-stone-800"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Header &amp; Navigation --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;header id="header" class="bg-stone-50/80 backdrop-blur-lg sticky top-0 z-40 border-b border-stone-200"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;nav class="container mx-auto px-4 sm:px-6 lg:px-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex items-center justify-between h-16"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex-shrink-0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="#hero" class="text-xl font-bold text-teal-700"&gt;AI UX Patterns Guide&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="hidden md:block"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="ml-10 flex items-baseline space-x-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="#explorer" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600"&gt;Pattern Explorer&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="md:hidden"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-stone-500 hover:text-teal-600 hover:bg-stone-100 focus:outline-none"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="sr-only"&gt;Open main menu&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="mobile-menu" class="md:hidden hidden"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="px-2 pt-2 pb-3 space-y-1 sm:px-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#explorer" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600"&gt;Pattern Explorer&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Hero Section --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="hero" class="text-center py-16 md:py-24"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-4xl md:text-6xl font-bold tracking-tight text-stone-900"&gt;Understanding AI User Experience Patterns&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="mt-4 md:mt-6 max-w-3xl mx-auto text-lg md:text-xl text-stone-600"&gt;Explore emerging solutions for designing intuitive and effective products powered by Artificial Intelligence.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="mt-4 max-w-3xl mx-auto text-base text-stone-500"&gt;Unlike traditional software, AI introduces new complexities like unpredictability, learning systems, and the crucial need for user trust and control.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Pattern Explorer Section --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="explorer" class="py-16 md:py-24 bg-stone-100 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 rounded-xl"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center container mx-auto"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl"&gt;The AI UX Pattern Explorer&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="mt-4 max-w-3xl mx-auto text-lg text-stone-600"&gt;Dive into the key AI UX patterns. Select a category below to filter the patterns, and click on any card to view its detailed definition and purpose.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="pattern-filters" class="mt-12 flex justify-center flex-wrap gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="patterns-grid" class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
-<p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="bg-stone-800 text-white"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;AI UX Patterns Interactive Guide &amp;copy; 2025&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-sm text-stone-400 mt-2"&gt;Designed for clarity and interaction.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Modal for Pattern Details --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="pattern-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-bg fixed inset-0 bg-black/50" aria-hidden="true"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-content relative w-full max-w-2xl max-h-[90vh] bg-white rounded-lg shadow-xl flex flex-col opacity-0 scale-95"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="p-6 border-b border-stone-200"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 id="modal-title" class="text-2xl font-bold text-stone-900"&gt;&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;p id="modal-category" class="mt-1 text-sm font-semibold text-teal-600 uppercase tracking-wider"&gt;&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="modal-body" class="p-6 overflow-y-auto text-stone-700"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="p-4 bg-stone-50 border-t border-stone-200 text-right"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;button id="modal-close" class="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"&gt;Close&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const appData = {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>patterns: [</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'rawText', category: 'Input &amp; Prompting', title: 'Raw Text Input', description: 'The most basic, allowing users to directly type prompts to the AI.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'voiceInput', category: 'Input &amp; Prompting', title: 'Voice Input', description: 'Similar to text, but leveraging natural language through speech.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'imageInput', category: 'Input &amp; Prompting', title: 'Image/Multimedia Input', description: 'Allowing users to provide images, videos, or audio as part of their prompt to enrich context.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'inlineSuggestions', category: 'Input &amp; Prompting', title: 'Inline Suggestions/Completion', description: 'AI-powered suggestions that appear as the user types, helping them formulate better prompts.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'structuredPrompting', category: 'Input &amp; Prompting', title: 'Structured Prompting/Prompt Builders', description: 'Providing scaffolding or guided fields for users to input specific details, ensuring the AI receives the necessary information. This can be through dropdowns, forms, or "fill-in-the-blanks" (Cloze Passage).' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'promptQualityFeedback', category: 'Input &amp; Prompting', title: 'Prompt Quality Feedback', description: 'Offering real-time feedback on the quality or level of detail in a user\'s prompt.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'promptTemplates', category: 'Input &amp; Prompting', title: 'Prompt Templates', description: 'Pre-written prompts that users can select and customize, or a library of common use cases.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'editingAssistance', category: 'Input &amp; Prompting', title: 'Editing Assistance (Pre-submission)', description: 'AI helping users refine or enhance their prompt before it\'s sent.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'configurableControls', category: 'Input &amp; Prompting', title: 'Configurable Controls', description: 'Abstracted controls that allow users to influence the AI\'s output without needing to understand complex prompting.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'referenceMaterial', category: 'Input &amp; Prompting', title: 'Reference Material', description: 'Allowing users to add specific files or documents for the AI to reference, tightly scoping the results.' },</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'resultVariations', category: 'Output &amp; Result Interaction', title: 'Result Variations', description: 'Presenting multiple generated outputs for a single prompt, allowing users to choose the best one.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'resultActions', category: 'Output &amp; Result Interaction', title: 'Result Actions', description: 'Providing contextually relevant actions or options to interact with the generated result (e.g., "Summarize," "Expand," "Translate," "Edit").' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'showCitations', category: 'Output &amp; Result Interaction', title: 'Show Citations/Sources', description: 'Clearly indicating the sources the AI used to generate its response, building trust and allowing for verification (especially important for RAG - Retrieval-Augmented Generation).' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'resultPreview', category: 'Output &amp; Result Interaction', title: 'Result Rendered Preview', description: 'A live preview of generated content (text, image, code) before final acceptance.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'fullPartialRegen', category: 'Output &amp; Result Interaction', title: 'Full/Partial Regeneration', description: 'Enabling users to regenerate the entire output or specific sections.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'editableOutput', category: 'Output &amp; Result Interaction', title: 'Editable Output', description: 'Allowing users to directly modify or refine the AI-generated content.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'iterativeExploration', category: 'Output &amp; Result Interaction', title: 'Iterative Exploration', description: 'Providing "regenerate" or "try again" buttons, and allowing users to refine or follow up on responses, encouraging an iterative process to find the best output.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'timelineDisplay', category: 'Output &amp; Result Interaction', title: 'Timeline/Object-Oriented Display', description: 'Presenting results in a structured way (e.g., timeline for historical data, object categories for hierarchical insights).' },</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'clearCommunication', category: 'Trust, Transparency &amp; Control', title: 'Clear Communication of AI\'s Role', description: 'Explicitly stating what the AI component does and its limitations.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'realisticExpectations', category: 'Trust, Transparency &amp; Control', title: 'Setting Realistic Expectations', description: 'Being transparent about the AI\'s capabilities and potential for errors or "hallucinations."' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'systemStatus', category: 'Trust, Transparency &amp; Control', title: 'Visibility of System Status', description: 'Providing clear indicators (progress bars, loading animations, "AI is thinking" messages) so users understand what the AI is doing.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'userControl', category: 'Trust, Transparency &amp; Control', title: 'User Control &amp; Agency', description: 'Ensuring users remain in control, with options to override, edit, or steer the AI. This includes easy switching between AI and manual modes.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'feedbackMechanisms', category: 'Trust, Transparency &amp; Control', title: 'Feedback Mechanisms', description: 'Allowing users to provide feedback on AI outputs (e.g., "thumbs up/down," "helpful/not helpful") to help the AI learn and improve.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'explainableAI', category: 'Trust, Transparency &amp; Control', title: 'Explainable AI (XAI)', description: 'Providing explanations for how the AI arrived at a particular decision or output, especially in high-stakes scenarios.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'dataPrivacy', category: 'Trust, Transparency &amp; Control', title: 'Data Privacy Controls', description: 'Giving users clear control over their data, how it\'s used, and options to delete or export it.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'errorRecovery', category: 'Trust, Transparency &amp; Control', title: 'Error Prevention &amp; Recovery', description: 'Designing for potential AI errors with clear messages, undo/redo options, and pathways for recovery.' },</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'contextualGuidance', category: 'Guiding &amp; Onboarding', title: 'Contextual Guidance', description: 'Providing examples, tips, and quick feature overviews at the right moment in the user journey.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'wayfinders', category: 'Guiding &amp; Onboarding', title: 'Wayfinders', description: 'Giving users clues about how to interact with the model, especially for new users.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'nudges', category: 'Guiding &amp; Onboarding', title: 'Nudges', description: 'Gently alerting users to actions they can take with AI.' },</p>
-<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'onboardingExamples', category: 'Guiding &amp; Onboarding', title: 'Onboarding Examples/Walkthroughs', description: 'Guiding users through initial interactions and showcasing AI capabilities.' }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>]</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const patternFilters = document.getElementById('pattern-filters');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const patternsGrid = document.getElementById('patterns-grid');</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const modal = document.getElementById('pattern-modal');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const modalBg = modal.querySelector('.modal-bg');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const modalClose = document.getElementById('modal-close');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const modalTitle = document.getElementById('modal-title');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const modalCategory = document.getElementById('modal-category');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const modalBody = document.getElementById('modal-body');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// Collect unique categories</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const categories = ['All', ...new Set(appData.patterns.map(p =&gt; p.category))];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// Render Pattern Filters</p>
-<p class="p1"><span class="Apple-converted-space">            </span>categories.forEach(cat =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const button = document.createElement('button');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>button.dataset.filter = cat;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>button.className = 'filter-btn px-4 py-2 text-sm font-semibold rounded-full transition-colors ' + (cat === 'All' ? 'active bg-teal-600 text-white' : 'bg-white text-stone-600 hover:bg-teal-100');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>button.textContent = cat;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>patternFilters.appendChild(button);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// Function to render patterns based on filter</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const renderPatterns = (filter = 'All') =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>patternsGrid.innerHTML = '';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const filteredPatterns = filter === 'All' ? appData.patterns : appData.patterns.filter(p =&gt; p.category === filter);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>filteredPatterns.forEach(p =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>const div = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>div.className = 'pattern-card bg-white p-6 rounded-xl shadow-lg border border-stone-200 cursor-pointer';</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>div.dataset.patternId = p.id;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>div.dataset.category = p.category;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>div.innerHTML = `</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4 class="font-bold text-lg text-stone-900"&gt;${p.title}&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="mt-2 text-sm text-stone-600"&gt;${p.description}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="mt-4 inline-block text-xs font-semibold text-teal-600 uppercase tracking-wider"&gt;${p.category}&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>patternsGrid.appendChild(div);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>});</p>
-<p class="p1"><span class="Apple-converted-space">            </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// Event listener for filter buttons</p>
-<p class="p1"><span class="Apple-converted-space">            </span>patternFilters.addEventListener('click', e =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (e.target.classList.contains('filter-btn')) {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>const filter = e.target.dataset.filter;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>document.querySelectorAll('.filter-btn').forEach(btn =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>btn.classList.remove('active', 'bg-teal-600', 'text-white');</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>btn.classList.add('bg-white', 'text-stone-600', 'hover:bg-teal-100');</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>e.target.classList.add('active', 'bg-teal-600', 'text-white');</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>e.target.classList.remove('bg-white', 'text-stone-600', 'hover:bg-teal-100');</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>renderPatterns(filter);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// Event listener for pattern cards to open modal</p>
-<p class="p1"><span class="Apple-converted-space">            </span>patternsGrid.addEventListener('click', e =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const card = e.target.closest('.pattern-card');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (card) {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>const patternId = card.dataset.patternId;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>const pattern = appData.patterns.find(p =&gt; p.id === patternId);</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (pattern) {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>modalTitle.textContent = pattern.title;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>modalCategory.textContent = pattern.category;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>modalBody.innerHTML = `</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p&gt;${pattern.description}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>modal.classList.remove('hidden');</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>modal.classList.add('flex');</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>setTimeout(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>modal.querySelector('.modal-content').classList.remove('opacity-0', 'scale-95');</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>modal.querySelector('.modal-bg').classList.remove('opacity-0');</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>}, 10);</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// Close modal function</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const closeModal = () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>modal.querySelector('.modal-content').classList.add('opacity-0', 'scale-95');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>modal.querySelector('.modal-bg').classList.add('opacity-0');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>modal.classList.add('hidden');</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>modal.classList.remove('flex');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}, 300);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>modalClose.addEventListener('click', closeModal);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>modalBg.addEventListener('click', closeModal);</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// Initial render of all patterns</p>
-<p class="p1"><span class="Apple-converted-space">            </span>renderPatterns();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// Mobile menu toggle</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const mobileMenuButton = document.getElementById('mobile-menu-button');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const mobileMenu = document.getElementById('mobile-menu');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>mobileMenuButton.addEventListener('click', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>mobileMenu.classList.toggle('hidden');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">            </span>mobileMenu.addEventListener('click', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>mobileMenu.classList.add('hidden');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// Nav link active state on scroll</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const sections = document.querySelectorAll('section');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const navLinks = document.querySelectorAll('.nav-link');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const observer = new IntersectionObserver((entries) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>entries.forEach(entry =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (entry.isIntersecting) {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>navLinks.forEach(link =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>link.classList.remove('active');</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>if (link.getAttribute('href').substring(1) === entry.target.id) {</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>link.classList.add('active');</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                </span>});</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}, { rootMargin: '-50% 0px -50% 0px' });</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>sections.forEach(section =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>observer.observe(section);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+<body class="bg-stone-50 text-stone-800">
+  <!-- Header & Navigation -->
+  <header id="header" class="bg-stone-50/80 backdrop-blur-lg sticky top-0 z-40 border-b border-stone-200">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex-shrink-0">
+          <a href="#hero" class="text-xl font-bold text-teal-700">AI UX Patterns Guide</a>
+        </div>
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <a href="#explorer" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600">Pattern Explorer</a>
+          </div>
+        </div>
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-stone-500 hover:text-teal-700 focus:outline-none">
+            <span class="sr-only">Open main menu</span>
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="md:hidden hidden">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="#explorer" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600">Pattern Explorer</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+    <!-- Hero Section -->
+    <section id="hero" class="text-center py-16 md:py-24">
+      <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-stone-900">Understanding AI User Experience Patterns</h1>
+      <p class="mt-4 md:mt-6 max-w-3xl mx-auto text-lg md:text-xl text-stone-600">
+        Explore emerging solutions for designing interfaces that harness the power and nuance of artificial intelligence.
+      </p>
+      <p class="mt-4 max-w-3xl mx-auto text-base text-stone-500">
+        Unlike traditional software, AI introduces new complexities for users. This guide surfaces key UX patterns for trustworthy, intuitive, and efficient AI interactions.
+      </p>
+    </section>
+
+    <!-- Pattern Explorer Section -->
+    <section id="explorer" class="py-16 md:py-24 bg-stone-100 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 rounded-xl">
+      <div class="text-center container mx-auto">
+        <h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl">The AI UX Pattern Explorer</h2>
+        <p class="mt-4 max-w-3xl mx-auto text-lg text-stone-600">
+          Dive into the key AI UX patterns. Select a category below or browse all patterns.
+        </p>
+      </div>
+      <div id="pattern-filters" class="mt-12 flex justify-center flex-wrap gap-2"></div>
+      <div id="patterns-grid" class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    </section>
+  </main>
+
+  <footer class="bg-stone-800 text-white">
+    <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
+      <p>AI UX Patterns Interactive Guide &copy; 2025</p>
+      <p class="text-sm text-stone-400 mt-2">Designed for clarity and interaction.</p>
+    </div>
+  </footer>
+
+  <!-- Modal for Pattern Details -->
+  <div id="pattern-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="modal-bg fixed inset-0 bg-black/50 opacity-0" aria-hidden="true"></div>
+    <div class="modal-content relative w-full max-w-2xl max-h-[90vh] bg-white rounded-lg shadow-xl flex flex-col opacity-0 scale-95">
+      <div class="p-6 border-b border-stone-200">
+        <h3 id="modal-title" class="text-2xl font-bold text-stone-900"></h3>
+        <p id="modal-category" class="mt-1 text-sm font-semibold text-teal-600 uppercase tracking-wider"></p>
+      </div>
+      <div id="modal-body" class="p-6 overflow-y-auto text-stone-700"></div>
+      <div class="p-4 bg-stone-50 border-t border-stone-200 text-right">
+        <button id="modal-close" class="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const appData = {
+      patterns: [
+        { id: 'rawText', category: 'Input & Prompting', title: 'Raw Text Input', description: 'The most basic, allowing users to type freeform requests.' },
+        { id: 'voiceInput', category: 'Input & Prompting', title: 'Voice Input', description: 'Similar to text, but leveraging speech-to-text for natural input.' },
+        { id: 'imageInput', category: 'Input & Prompting', title: 'Image/Multimedia Input', description: 'Allowing users to upload or capture images, audio, or video for AI analysis.' },
+        { id: 'inlineSuggestions', category: 'Input & Prompting', title: 'Inline Suggestions/Completion', description: 'AI-driven suggestions as users type; supports efficiency and learning.' },
+        { id: 'structuredPrompting', category: 'Input & Prompting', title: 'Structured Prompting/Prompt Builders', description: 'UI elements that help users construct effective prompts or queries.' },
+        { id: 'promptQualityFeedback', category: 'Input & Prompting', title: 'Prompt Quality Feedback', description: 'Offer feedback about prompt effectiveness before/after submission.' },
+        { id: 'promptTemplates', category: 'Input & Prompting', title: 'Prompt Templates', description: 'Pre-written prompts for common tasks or user onboarding.' },
+        { id: 'editingAssistance', category: 'Input & Prompting', title: 'Editing Assistance (Pre-submission)', description: 'AI helps refine or polish the user’s input before it is submitted.' },
+        { id: 'configurableControls', category: 'Input & Prompting', title: 'Configurable Controls', description: 'Abstracted controls (sliders, toggles) for model or system behavior.' },
+        { id: 'referenceMaterial', category: 'Input & Prompting', title: 'Reference Material', description: 'Allowing users to provide context or documents to guide AI.' },
+
+        { id: 'resultVariations', category: 'Output & Result Interaction', title: 'Result Variations', description: 'Presenting multiple options or variations for the AI output.' },
+        { id: 'resultActions', category: 'Output & Result Interaction', title: 'Result Actions', description: 'Providing common next-step actions (copy, edit, share, export).' },
+        { id: 'showCitations', category: 'Output & Result Interaction', title: 'Show Citations/Sources', description: 'Clearly indicating where results come from for transparency.' },
+        { id: 'resultPreview', category: 'Output & Result Interaction', title: 'Result Rendered Preview', description: 'A live or formatted preview of generated output (e.g., tables, charts).' },
+        { id: 'fullPartialRegen', category: 'Output & Result Interaction', title: 'Full/Partial Regeneration', description: 'Letting users re-run or partially regenerate results as needed.' },
+        { id: 'editableOutput', category: 'Output & Result Interaction', title: 'Editable Output', description: 'Allowing users to adjust or edit results directly in the UI.' },
+        { id: 'iterativeExploration', category: 'Output & Result Interaction', title: 'Iterative Exploration', description: 'Support for step-by-step refinement or conversational flows.' },
+        { id: 'timelineDisplay', category: 'Output & Result Interaction', title: 'Timeline/Object-Oriented Display', description: 'Results organized as a timeline or objects/entities.' },
+
+        { id: 'clearCommunication', category: 'Trust, Transparency & Control', title: "Clear Communication of AI's Role", description: "Explicitly state when and how AI is used in the experience." },
+        { id: 'realisticExpectations', category: 'Trust, Transparency & Control', title: 'Setting Realistic Expectations', description: 'Help users understand AI’s capabilities and limitations.' },
+        { id: 'systemStatus', category: 'Trust, Transparency & Control', title: 'Visibility of System Status', description: 'Show when AI is processing, idle, or failed.' },
+        { id: 'userControl', category: 'Trust, Transparency & Control', title: 'User Control & Agency', description: 'Enable users to override, undo, or adjust AI actions.' },
+        { id: 'feedbackMechanisms', category: 'Trust, Transparency & Control', title: 'Feedback Mechanisms', description: 'Allow users to provide feedback on AI responses or errors.' },
+        { id: 'explainableAI', category: 'Trust, Transparency & Control', title: 'Explainable AI (XAI)', description: 'Provide explanations, reasoning, or confidence scores.' },
+        { id: 'dataPrivacy', category: 'Trust, Transparency & Control', title: 'Data Privacy Controls', description: 'Giving users control over what data they share and how it is used.' },
+        { id: 'errorRecovery', category: 'Trust, Transparency & Control', title: 'Error Prevention & Recovery', description: 'Help users recover from or prevent AI errors.' },
+
+        { id: 'contextualGuidance', category: 'Guiding & Onboarding', title: 'Contextual Guidance', description: 'Providing in-place hints, tooltips, or help as users interact.' },
+        { id: 'wayfinders', category: 'Guiding & Onboarding', title: 'Wayfinders', description: 'Giving users clues about how to interact with the AI or system.' },
+        { id: 'nudges', category: 'Guiding & Onboarding', title: 'Nudges', description: 'Gently alerting users to actions they might want to take next.' },
+        { id: 'onboardingExamples', category: 'Guiding & Onboarding', title: 'Onboarding Examples/Walkthroughs', description: 'Interactive examples or walkthroughs to help new users.' }
+      ]
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const patternFilters = document.getElementById('pattern-filters');
+      const patternsGrid = document.getElementById('patterns-grid');
+
+      const modal = document.getElementById('pattern-modal');
+      const modalBg = modal.querySelector('.modal-bg');
+      const modalClose = document.getElementById('modal-close');
+      const modalTitle = document.getElementById('modal-title');
+      const modalCategory = document.getElementById('modal-category');
+      const modalBody = document.getElementById('modal-body');
+
+      // Collect unique categories
+      const categories = ['All', ...new Set(appData.patterns.map(p => p.category))];
+
+      // Render Pattern Filters
+      categories.forEach(cat => {
+        const button = document.createElement('button');
+        button.dataset.filter = cat;
+        button.className = 'filter-btn px-4 py-2 text-sm font-semibold rounded-full transition-colors ' + (cat === 'All' ? 'active bg-teal-600 text-white' : 'bg-white text-stone-600 hover:bg-teal-100');
+        button.textContent = cat;
+        patternFilters.appendChild(button);
+      });
+
+      // Function to render patterns based on filter
+      const renderPatterns = (filter = 'All') => {
+        patternsGrid.innerHTML = '';
+        const filteredPatterns = filter === 'All' ? appData.patterns : appData.patterns.filter(p => p.category === filter);
+        filteredPatterns.forEach(p => {
+          const div = document.createElement('div');
+          div.className = 'pattern-card bg-white p-6 rounded-xl shadow-lg border border-stone-200 cursor-pointer';
+          div.dataset.patternId = p.id;
+          div.dataset.category = p.category;
+          div.innerHTML = `
+            <h4 class="font-bold text-lg text-stone-900">${p.title}</h4>
+            <p class="mt-2 text-sm text-stone-600">${p.description}</p>
+            <span class="mt-4 inline-block text-xs font-semibold text-teal-600 uppercase tracking-wider">${p.category}</span>
+          `;
+          patternsGrid.appendChild(div);
+        });
+      };
+
+      // Event listener for filter buttons
+      patternFilters.addEventListener('click', e => {
+        if (e.target.classList.contains('filter-btn')) {
+          const filter = e.target.dataset.filter;
+          document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active', 'bg-teal-600', 'text-white');
+            btn.classList.add('bg-white', 'text-stone-600', 'hover:bg-teal-100');
+          });
+          e.target.classList.add('active', 'bg-teal-600', 'text-white');
+          e.target.classList.remove('bg-white', 'text-stone-600', 'hover:bg-teal-100');
+          renderPatterns(filter);
+        }
+      });
+
+      // Event listener for pattern cards to open modal
+      patternsGrid.addEventListener('click', e => {
+        const card = e.target.closest('.pattern-card');
+        if (card) {
+          const patternId = card.dataset.patternId;
+          const pattern = appData.patterns.find(p => p.id === patternId);
+          if (pattern) {
+            modalTitle.textContent = pattern.title;
+            modalCategory.textContent = pattern.category;
+            modalBody.innerHTML = `<p>${pattern.description}</p>`;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+              modal.querySelector('.modal-content').classList.remove('opacity-0', 'scale-95');
+              modal.querySelector('.modal-bg').classList.remove('opacity-0');
+            }, 10);
+          }
+        }
+      });
+
+      // Close modal function
+      const closeModal = () => {
+        modal.querySelector('.modal-content').classList.add('opacity-0', 'scale-95');
+        modal.querySelector('.modal-bg').classList.add('opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }, 300);
+      };
+      modalClose.addEventListener('click', closeModal);
+      modalBg.addEventListener('click', closeModal);
+
+      // Initial render of all patterns
+      renderPatterns();
+
+      // Mobile menu toggle
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+      mobileMenu.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+
+      // Nav link active state on scroll
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href').substring(1) === entry.target.id) {
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      }, { rootMargin: '-50% 0px -50% 0px' });
+
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
 </body>
 </html>
