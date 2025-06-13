@@ -194,13 +194,13 @@
       const categories = ['All', ...new Set(appData.patterns.map(p => p.category))];
 
       // Render Pattern Filters
-      categories.forEach(cat => {
-        const button = document.createElement('button');
-        button.dataset.filter = cat;
-        button.className = 'filter-btn px-4 py-2 text-sm font-semibold rounded-full transition-colors ' + (cat === 'All' ? 'active bg-teal-600 text-white' : 'bg-white text-stone-600 hover:bg-teal-100');
-        button.textContent = cat;
-        patternFilters.appendChild(button);
-      });
+categories.forEach(cat => {
+  const button = document.createElement('button');
+  button.dataset.filter = cat;
+  button.className = 'filter-btn px-4 py-2 text-sm font-semibold rounded-full transition-colors ' + (cat === 'All' ? 'active bg-teal-600 text-white' : 'bg-white text-stone-600 hover:bg-teal-100');
+  button.textContent = cat;
+  patternFilters.appendChild(button);
+});
 
       // Function to render patterns based on filter
       const renderPatterns = (filter = 'All') => {
