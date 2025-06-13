@@ -1,246 +1,500 @@
-import React, { useState } from 'react';
-import {
-  Lightbulb,
-  Settings,
-  Repeat,
-  MessageSquareText,
-  Zap,
-  ShieldCheck,
-  Speech,
-  Users,
-  Telescope,
-} from 'lucide-react';
-
-// Main App component
-const App = () => {
-  // State to manage the currently selected pattern for the modal
-  const [selectedPattern, setSelectedPattern] = useState(null);
-
-  // Data for each Generative AI UX Pattern, mimicking the diagrams and their descriptions
-  const patterns = [
-    {
-      id: 'contextual-input',
-      title: 'Contextual Input',
-      concept: 'Users provide context (text, image, audio, etc.). AI generates based on this.',
-      description:
-        "This pattern involves the user providing specific input that acts as context for the AI's generation. The AI then processes and produces an output tailored to this context.",
-      examples: [
-        'Midjourney: Users input text prompts to generate images.',
-        'Text-to-code generators: Developers describe desired code functionality in natural language.',
-        'Creating images from scribbles: AI interprets rough sketches to produce polished illustrations.',
-        'Voice-to-text systems: Users speak, and AI transcribes their words into written text.',
-      ],
-      icon: <MessageSquareText className="h-8 w-8 text-indigo-500" />,
-    },
-    {
-      id: 'dynamic-output',
-      title: 'Dynamic Output',
-      concept: 'AI output changes based on user interaction or input.',
-      description:
-        "Dynamic output refers to the AI's ability to adapt or modify its generated content in real-time based on user feedback or additional input.",
-      examples: [
-        'Rewriting an email: AI rewrites a draft email based on user-selected tones (e.g., "formal," "casual," "urgent").',
-        'Generating variations of an image: Users click a button to see different stylistic or compositional versions of an initial AI-generated image.',
-        'Interactive story generation: The storyline evolves based on choices made by the user.',
-        'Code refactoring suggestions: AI suggests code improvements that update dynamically as the user edits their code.',
-      ],
-      icon: <Repeat className="h-8 w-8 text-green-500" />,
-    },
-    {
-      id: 'human-in-the-loop',
-      title: 'Human-in-the-Loop Feedback',
-      concept: 'User provides feedback to refine AI output.',
-      description:
-        'This pattern emphasizes the crucial role of human oversight and feedback in improving AI-generated content. Users actively correct, rate, or edit outputs.',
-      examples: [
-        'Correcting AI-generated code: Developers directly edit AI-suggested code snippets, and the AI learns from these corrections.',
-        'Thumbs up/down ratings: Users rate AI-generated text or images, implicitly teaching the model preferred styles or content.',
-        'Direct editing of generated text: Users can highlight and modify parts of an AI-written document, providing explicit feedback.',
-        'Fine-tuning image prompts: Artists iterate on prompts, adding or removing details based on initial AI outputs until the desired image is achieved.',
-      ],
-      icon: <Users className="h-8 w-8 text-blue-500" />,
-    },
-    {
-      id: 'interpretive-guidance',
-      title: 'Interpretive Guidance',
-      concept: 'AI helps users understand its capabilities or generated content.',
-      description:
-        "Interpretive guidance focuses on enhancing user understanding of the AI system itself, its limitations, and the rationale behind outputs.",
-      examples: [
-        'Suggesting how to rephrase a prompt: AI provides tips on making prompts clearer or more effective for better results.',
-        'Explaining why certain results were generated: A search AI might explain the ranking factors for its results.',
-        'Detailing where AI information came from: A content generation AI might cite sources for facts it included.',
-        'Highlighting AI limitations: The system informs users when a request might be beyond its current capabilities or prone to errors.',
-      ],
-      icon: <Lightbulb className="h-8 w-8 text-yellow-500" />,
-    },
-    {
-      id: 'proactive-assistance',
-      title: 'Proactive Assistance',
-      concept: 'AI anticipates needs and offers relevant suggestions.',
-      description:
-        'This pattern describes AI systems that actively monitor user activity or context and anticipate potential needs, offering suggestions before being asked.',
-      examples: [
-        'Predictive text and auto-completion in typing interfaces.',
-        'Email auto-replies or suggested quick responses based on message content.',
-        'Smart scheduling tools that suggest meeting times based on calendar availability.',
-        'Content suggestions in streaming apps based on viewing history and preferences.',
-      ],
-      icon: <Zap className="h-8 w-8 text-orange-500" />,
-    },
-    {
-      id: 'explainable-ai',
-      title: 'Explainable AI (XAI)',
-      concept: 'AI clarifies its reasoning or decision-making process.',
-      description:
-        'XAI is about making AI models transparent and understandable. It allows users to comprehend *why* an AI made a particular decision or produced a specific output.',
-      examples: [
-        'Explaining why a loan application was denied: The AI outlines the key financial factors that led to the rejection.',
-        'Detailing factors for a medical diagnosis: An AI diagnostic tool highlights symptoms and test results that influenced its conclusion.',
-        'Showing how a deepfake was created: An AI tool demonstrates the steps or algorithms used to generate manipulated media.',
-        'Providing feature importance in a predictive model: Displaying which input features had the most impact on a prediction.',
-      ],
-      icon: <Telescope className="h-8 w-8 text-red-500" />,
-    },
-    {
-      id: 'multi-modal-interaction',
-      title: 'Multi-Modal Interaction',
-      concept: 'AI interacts using various input/output modalities (text, voice, image).',
-      description:
-        'This pattern involves AI systems that can process and generate information across multiple sensory modalities simultaneously or interchangeably.',
-      examples: [
-        'Generating text from images: AI describes the content of an image in written form.',
-        'Describing an image using voice: Users can ask questions about an image, and the AI responds verbally.',
-        'A conversational AI that understands both typed text and spoken speech and can generate responses in both formats.',
-        'AI assistants that can process gestures or facial expressions as input.',
-      ],
-      icon: <Speech className="h-8 w-8 text-purple-500" />,
-    },
-    {
-      id: 'user-control-customization',
-      title: 'User Control & Customization',
-      concept: 'Users can tailor AI behavior and output.',
-      description:
-        "This pattern empowers users by providing them with granular control over the AI's behavior, preferences, and the characteristics of generated content.",
-      examples: [
-        'Adjusting generative image style: Users can select from presets or fine-tune parameters like "photorealistic," "abstract," "cartoon," etc.',
-        'Setting safety filters: Users can enable or disable content filters for AI-generated text or images.',
-        'Defining persona for a chatbot: Users can specify if the chatbot should be "friendly," "professional," "humorous," etc.',
-        'Training custom AI models: Users can provide their own data to specialize an AI for a particular task or domain.',
-      ],
-      icon: <Settings className="h-8 w-8 text-cyan-500" />,
-    },
-    {
-      id: 'ethical-ai-bias-mitigation',
-      title: 'Ethical AI & Bias Mitigation',
-      concept: 'Designing AI to be fair, accountable, and transparent.',
-      description:
-        "This pattern focuses on the critical design considerations to ensure AI systems are developed and used responsibly, addressing biases and promoting fairness.",
-      examples: [
-        'Fairness dashboards: Tools that allow developers to monitor and mitigate biases in AI model outputs.',
-        'Bias detection tools: Automated systems that flag potentially biased language or imagery generated by AI.',
-        'Privacy-preserving AI: Techniques like federated learning or differential privacy used to protect user data while training AI models.',
-        "Transparency reports: Public documentation detailing an AI system's ethical guidelines, data sources, and known limitations regarding bias.",
-      ],
-      icon: <ShieldCheck className="h-8 w-8 text-pink-500" />,
-    },
-  ];
-
-  // Inject custom font and animation styles
-  React.useEffect(() => {
-    const style = `
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-      .font-inter { font-family: 'Inter', sans-serif; }
-      @keyframes scaleIn {
-        from { transform: scale(0.95); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-      }
-      .animate-scaleIn { animation: scaleIn 0.3s ease-out forwards; }
-    `;
-    const styleTag = document.createElement('style');
-    styleTag.innerHTML = style;
-    document.head.appendChild(styleTag);
-    return () => {
-      document.head.removeChild(styleTag);
-    };
-  }, []);
-
-  return (
-    <div className="min-h-screen bg-gray-100 p-4 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto py-8">
-        <h1 className="text-4xl font-bold text-center mb-8 text-indigo-700">
-          Generative AI UX Design Patterns
-        </h1>
-        <p className="text-center text-lg text-gray-600 mb-12">
-          Click on any pattern below to view its full description and examples.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {patterns.map((pattern) => (
-            <PatternCard
-              key={pattern.id}
-              pattern={pattern}
-              onClick={() => setSelectedPattern(pattern)}
-            />
-          ))}
-        </div>
-        {selectedPattern && (
-          <PatternModal
-            pattern={selectedPattern}
-            onClose={() => setSelectedPattern(null)}
-          />
-        )}
-      </div>
-    </div>
-  );
-};
-
-// PatternCard component to display each pattern as a clickable card
-const PatternCard = ({ pattern, onClick }) => (
-  <div
-    className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300 transform border border-gray-200"
-    onClick={onClick}
-  >
-    <div className="mb-4 flex items-center justify-center rounded-full bg-indigo-50 p-3">
-      {pattern.icon}
-    </div>
-    <h2 className="text-xl font-semibold text-gray-900 mb-2">{pattern.title}</h2>
-    <p className="text-gray-600 text-sm">{pattern.concept}</p>
-  </div>
-);
-
-// PatternModal component to display the detailed description in a modal
-const PatternModal = ({ pattern, onClose }) => {
-  if (!pattern) return null;
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-8 relative transform transition-all duration-300 scale-95 opacity-0 animate-scaleIn">
-        <button
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-light leading-none focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-full w-8 h-8 flex items-center justify-center"
-          onClick={onClose}
-          aria-label="Close"
-        >
-          &times;
-        </button>
-        <div className="flex items-center mb-6">
-          <div className="mr-4 flex items-center justify-center rounded-full bg-indigo-100 p-3">
-            {pattern.icon}
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900">{pattern.title}</h2>
-        </div>
-        <div className="max-h-[70vh] overflow-y-auto pr-2">
-          <p className="text-gray-700 mb-6 leading-relaxed">{pattern.description}</p>
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">Examples:</h3>
-          <ul className="list-disc list-inside text-gray-600 space-y-2">
-            {pattern.examples.map((example, index) => (
-              <li key={index} className="pl-2">
-                {example}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default App;
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Generative AI UX Design Patterns&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Inter Font --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Base styles for Inter font and body */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f3f4f6; /* Light gray background */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #1f2937; /* Dark gray text */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.6;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Main container styling */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 1200px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 2rem 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Header styling */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.header {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 3rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.header h1 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 2.5rem; /* 4xl equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 700; /* bold */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #4338ca; /* indigo-700 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.header p {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.125rem; /* lg equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #4b5563; /* gray-600 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Grid for pattern cards */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.patterns-grid {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: grid;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 1.5rem; /* 6 (Tailwind unit) equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Pattern card styling */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pattern-card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #ffffff; /* White background */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 0.75rem; /* rounded-xl */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 1.5rem; /* 6 (Tailwind unit) equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #e5e7eb; /* border border-gray-200 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease-in-out; /* hover:shadow-xl hover:scale-[1.02] */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pattern-card:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* hover:shadow-xl */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: scale(1.02); /* hover:scale-[1.02] */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pattern-card-icon-wrapper {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 1rem; /* 4 (Tailwind unit) equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 9999px; /* rounded-full */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0.75rem; /* 3 (Tailwind unit) equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #eef2ff; /* indigo-50 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pattern-card-icon {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 2rem; /* h-8 w-8 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stroke-width: 2; /* Adjust stroke width for icons if needed */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pattern-card h2 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.25rem; /* xl equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600; /* semibold */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #111827; /* gray-900 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 0.5rem; /* 2 (Tailwind unit) equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pattern-card p {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 0.875rem; /* sm equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #4b5563; /* gray-600 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Modal styling */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-overlay {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: fixed;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>right: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bottom: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: rgba(0, 0, 0, 0.5); /* bg-black bg-opacity-50 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 50;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 0; /* Initially hidden */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>pointer-events: none; /* Disable interaction when hidden */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: opacity 0.3s ease-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-overlay.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>pointer-events: auto; /* Enable interaction when active */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #ffffff; /* White background */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 0.75rem; /* rounded-xl */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-2xl */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 640px; /* max-w-2xl */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 2rem; /* 8 (Tailwind unit) equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: scale(0.95); /* Initial scale for animation */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 0; /* Initial opacity for animation */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.3s ease-out, opacity 0.3s ease-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-overlay.active .modal-content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: scale(1); /* Scale to normal */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 1; /* Fade in */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-close-button {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>right: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #6b7280; /* gray-500 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 2.25rem; /* text-3xl */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 300; /* font-light */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 2rem; /* w-8 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 2rem; /* h-8 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 9999px; /* rounded-full */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-close-button:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #1f2937; /* gray-800 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-close-button:focus {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 0 2px #4338ca; /* focus:ring-2 focus:ring-indigo-500 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-header {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 1.5rem; /* 6 (Tailwind unit) equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-icon-wrapper {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-right: 1rem; /* 4 (Tailwind unit) equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 9999px; /* rounded-full */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0.75rem; /* 3 (Tailwind unit) equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #e0e7ff; /* indigo-100 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-icon {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 2rem; /* h-8 w-8 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stroke-width: 2;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-header h2 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.5rem; /* 2xl equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 700; /* bold */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #111827; /* gray-900 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 70vh; /* max-h-[70vh] */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow-y: auto; /* overflow-y-auto */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-right: 0.5rem; /* pr-2 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-body p {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #374151; /* gray-700 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 1.5rem; /* 6 (Tailwind unit) equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.75; /* leading-relaxed */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-body h3 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.125rem; /* lg equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600; /* semibold */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #1f2937; /* gray-800 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 0.75rem; /* 3 (Tailwind unit) equivalent */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-body ul {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>list-style: disc;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>list-style-position: inside;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #4b5563; /* gray-600 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-left: 0.5rem; /* pl-2 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-body ul li {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 0.5rem; /* space-y-2 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Icon colors */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.icon-indigo { color: #6366f1; } /* indigo-500 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.icon-green { color: #22c55e; } /* green-500 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.icon-blue { color: #3b82f6; } /* blue-500 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.icon-yellow { color: #eab308; } /* yellow-500 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.icon-orange { color: #f97316; } /* orange-500 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.icon-red { color: #ef4444; } /* red-500 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.icon-purple { color: #a855f7; } /* purple-500 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.icon-cyan { color: #06b6d4; } /* cyan-500 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.icon-pink { color: #ec4899; } /* pink-500 */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;header class="header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1&gt;Generative AI UX Design Patterns&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Click on any pattern below to view its full description and examples.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;main class="patterns-grid" id="patternsGrid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Pattern cards will be injected here by JavaScript --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Modal Structure --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="patternModalOverlay" class="modal-overlay"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="modal-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button id="modalCloseButton" class="modal-close-button" aria-label="Close"&gt;&amp;times;&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="modal-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="modalIconWrapper" class="modal-icon-wrapper"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Icon will be injected here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 id="modalTitle"&gt;&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="modal-body"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p id="modalDescription"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3&gt;Examples:&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;ul id="modalExamples"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Examples will be injected here --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Data for each Generative AI UX Pattern, mimicking the diagrams and their descriptions</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const patterns = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>id: 'contextual-input',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: 'Contextual Input',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>concept: 'Users provide context (text, image, audio, etc.). AI generates based on this.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'This pattern involves the user providing specific input that acts as context for the AI\'s generation. The AI then processes this context to produce a relevant output. The quality and specificity of the input directly influence the output.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>examples: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Midjourney: Users input text prompts to generate images.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Text-to-code generators: Developers describe desired code functionality in natural language.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Creating images from scribbles: AI interprets rough sketches to produce polished illustrations.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Voice-to-text systems: Users speak, and AI transcribes their words into written text.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>icon: `&lt;svg class="pattern-card-icon icon-indigo" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L2 22l1.5-4.5A8.38 8.38 0 0 1 2 11.5a8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5A8.5 8.5 0 0 1 21 11.5Z"/&gt;&lt;/svg&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>id: 'dynamic-output',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: 'Dynamic Output',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>concept: 'AI output changes based on user interaction or input.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'Dynamic output refers to the AI\'s ability to adapt or modify its generated content in real-time based on user feedback or further input. This allows for iterative refinement and personalization.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>examples: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Rewriting an email: AI rewrites a draft email based on user-selected tones (e.g., "formal," "casual," "urgent").',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Generating variations of an image: Users click a button to see different stylistic or compositional versions of an initial AI-generated image.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Interactive story generation: The storyline evolves based on choices made by the user.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Code refactoring suggestions: AI suggests code improvements that update dynamically as the user edits their code.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>icon: `&lt;svg class="pattern-card-icon icon-green" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m12 18-6 6V18H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6l6 6Z"/&gt;&lt;path d="M12 18V9"/&gt;&lt;/svg&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>id: 'human-in-the-loop',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: 'Human-in-the-Loop Feedback',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>concept: 'User provides feedback to refine AI output.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'This pattern emphasizes the crucial role of human oversight and feedback in improving AI-generated content. Users actively review, evaluate, and provide corrections or preferences to guide the AI\'s learning and future generations.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>examples: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Correcting AI-generated code: Developers directly edit AI-suggested code snippets, and the AI learns from these corrections.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Thumbs up/down ratings: Users rate AI-generated text or images, implicitly teaching the model preferred styles or content.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Direct editing of generated text: Users can highlight and modify parts of an AI-written document, providing explicit feedback.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Fine-tuning image prompts: Artists iterate on prompts, adding or removing details based on initial AI outputs until the desired image is produced.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>icon: `&lt;svg class="pattern-card-icon icon-blue" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="9" cy="7" r="4"/&gt;&lt;path d="M22 21v-2a4 4 0 0 0-3-3.87"/&gt;&lt;path d="M16 3.13a4 4 0 0 1 0 7.75"/&gt;&lt;/svg&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>id: 'interpretive-guidance',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: 'Interpretive Guidance',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>concept: 'AI helps users understand its capabilities or generated content.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'Interpretive guidance focuses on enhancing user understanding of the AI system itself, its limitations, and the rationale behind its outputs. This builds trust and helps users interact more effectively.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>examples: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Suggesting how to rephrase a prompt: AI provides tips on making prompts clearer or more effective for better results.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Explaining why certain results were generated: A search AI might explain the ranking factors for its results.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Detailing where AI information came from: A content generation AI might cite sources for facts it included.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Highlighting AI limitations: The system informs users when a request might be beyond its current capabilities or prone to errors.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>icon: `&lt;svg class="pattern-card-icon icon-yellow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/&gt;&lt;path d="M9 18h6"/&gt;&lt;path d="M10 22h4"/&gt;&lt;/svg&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>id: 'proactive-assistance',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: 'Proactive Assistance',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>concept: 'AI anticipates needs and offers relevant suggestions.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'This pattern describes AI systems that actively monitor user activity or context and anticipate potential needs, offering helpful suggestions or completing tasks before being explicitly asked.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>examples: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Predictive text and auto-completion in typing interfaces.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Email auto-replies or suggested quick responses based on message content.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Smart scheduling tools that suggest meeting times based on calendar availability.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Content suggestions in streaming apps based on viewing history and preferences.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>icon: `&lt;svg class="pattern-card-icon icon-orange" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M13 2L3 14h9l-1 8 10-12h-9l1-8Z"/&gt;&lt;/svg&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>id: 'explainable-ai',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: 'Explainable AI (XAI)',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>concept: 'AI clarifies its reasoning or decision-making process.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'XAI is about making AI models transparent and understandable. It allows users to comprehend *why* an AI made a particular decision or generated a specific output, fostering trust and accountability.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>examples: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Explaining why a loan application was denied: The AI outlines the key financial factors that led to the rejection.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Detailing factors for a medical diagnosis: An AI diagnostic tool highlights symptoms and test results that influenced its conclusion.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Showing how a deepfake was created: An AI tool demonstrates the steps or algorithms used to generate manipulated media.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Providing feature importance in a predictive model: Displaying which input features had the most impact on a prediction.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>icon: `&lt;svg class="pattern-card-icon icon-red" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M10 12.5V10h1.5a1.5 1.5 0 0 1 0 3H10zm6 0v-2.5h-1.5a1.5 1.5 0 0 0 0 3H16z"/&gt;&lt;path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM12 18v-2h-3v-2h3v-2h-3v-2h3v-2h-3V6h6v12h-6z"/&gt;&lt;/svg&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>id: 'multi-modal-interaction',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: 'Multi-Modal Interaction',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>concept: 'AI interacts using various input/output modalities (text, voice, image).',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'This pattern involves AI systems that can process and generate information across multiple sensory modalities simultaneously. Users can interact using combinations of text, voice, images, gestures, etc.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>examples: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Generating text from images: AI describes the content of an image in written form.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Describing an image using voice: Users can ask questions about an image, and the AI responds verbally.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'A conversational AI that understands both typed text and spoken speech and can generate responses in both formats.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'AI assistants that can process gestures or facial expressions as input.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>icon: `&lt;svg class="pattern-card-icon icon-purple" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M17 10H7C4.23858 10 2 12.2386 2 15V16C2 18.7614 4.23858 21 7 21H17C19.7614 21 22 18.7614 22 16V15C22 12.2386 19.7614 10 17 10Z"/&gt;&lt;path d="M12 2V10"/&gt;&lt;path d="M18 2L17 5"/&gt;&lt;path d="M6 2L7 5"/&gt;&lt;/svg&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>id: 'user-control-customization',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: 'User Control &amp; Customization',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>concept: 'Users can tailor AI behavior and output.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'This pattern empowers users by providing them with granular control over the AI\'s behavior, preferences, and the characteristics of its generated output. It moves beyond passive consumption to active shaping of the AI experience.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>examples: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Adjusting generative image style: Users can select from presets or fine-tune parameters like "photorealistic," "abstract," "cartoonish."',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Setting safety filters: Users can enable or disable content filters for AI-generated text or images.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Defining persona for a chatbot: Users can specify if the chatbot should be "friendly," "professional," "humorous," etc.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Training custom AI models: Users can provide their own data to specialize an AI for a particular task or domain.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>icon: `&lt;svg class="pattern-card-icon icon-cyan" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;circle cx="12" cy="12" r="3"/&gt;&lt;path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82-.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0 .33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82-.33V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"/&gt;&lt;/svg&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>id: 'ethical-ai-bias-mitigation',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>title: 'Ethical AI &amp; Bias Mitigation',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>concept: 'Designing AI to be fair, accountable, and transparent.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>description: 'This pattern focuses on the critical design considerations to ensure AI systems are developed and used responsibly, addressing issues like fairness, privacy, accountability, and the reduction of harmful biases in generated content.',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>examples: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Fairness dashboards: Tools that allow developers to monitor and mitigate biases in AI model outputs.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Bias detection tools: Automated systems that flag potentially biased language or imagery generated by AI.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Privacy-preserving AI: Techniques like federated learning or differential privacy used to protect user data while training AI models.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>'Transparency reports: Public documentation detailing an AI system\'s ethical guidelines, data sources, and known limitations regarding bias.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>icon: `&lt;svg class="pattern-card-icon icon-pink" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/&gt;&lt;path d="m9 12 2 2 4-4"/&gt;&lt;/svg&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Get DOM elements</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const patternsGrid = document.getElementById('patternsGrid');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modalOverlay = document.getElementById('patternModalOverlay');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modalCloseButton = document.getElementById('modalCloseButton');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modalIconWrapper = document.getElementById('modalIconWrapper');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modalTitle = document.getElementById('modalTitle');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modalDescription = document.getElementById('modalDescription');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const modalExamples = document.getElementById('modalExamples');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/**</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* Creates an HTML element for a pattern card.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* @param {Object} pattern - The pattern data.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* @returns {HTMLElement} The created pattern card element.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function createPatternCard(pattern) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const card = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>card.className = 'pattern-card';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>card.setAttribute('data-pattern-id', pattern.id); // Store ID for easy lookup</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>card.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="pattern-card-icon-wrapper"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>${pattern.icon}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2&gt;${pattern.title}&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;${pattern.concept}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Add click event listener to open the modal</p>
+<p class="p1"><span class="Apple-converted-space">            </span>card.addEventListener('click', () =&gt; openModal(pattern));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return card;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/**</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* Opens the modal and populates it with the given pattern data.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* @param {Object} pattern - The pattern data to display in the modal.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function openModal(pattern) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalIconWrapper.innerHTML = pattern.icon; // Set the icon</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Adjust icon color for modal, if needed (re-apply class for larger context)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const iconSvg = modalIconWrapper.querySelector('svg');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (iconSvg) {</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>// Remove existing icon color classes (e.g., icon-indigo)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>iconSvg.className.baseVal = iconSvg.className.baseVal.replace(/icon-\w+/g, '');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Add the correct color class to the SVG in the modal context</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const colorClass = `icon-${pattern.icon.match(/icon-(\w+)"/)?.[1] || 'indigo'}`; // Extract color from initial icon SVG string</p>
+<p class="p1"><span class="Apple-converted-space">                </span>iconSvg.classList.add(colorClass);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalTitle.textContent = pattern.title;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalDescription.textContent = pattern.description;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Clear previous examples</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalExamples.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Add new examples</p>
+<p class="p1"><span class="Apple-converted-space">            </span>pattern.examples.forEach(example =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const li = document.createElement('li');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>li.textContent = example;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>modalExamples.appendChild(li);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Show the modal</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalOverlay.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.body.style.overflow = 'hidden'; // Prevent scrolling background</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/**</p>
+<p class="p1"><span class="Apple-converted-space">         </span>* Closes the modal.</p>
+<p class="p1"><span class="Apple-converted-space">         </span>*/</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function closeModal() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalOverlay.classList.remove('active');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.body.style.overflow = ''; // Restore scrolling</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Add event listener to the modal close button</p>
+<p class="p1"><span class="Apple-converted-space">        </span>modalCloseButton.addEventListener('click', closeModal);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Add event listener to close modal when clicking outside the content (on the overlay)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>modalOverlay.addEventListener('click', (event) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (event.target === modalOverlay) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>closeModal();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Initialize: Render all pattern cards</p>
+<p class="p1"><span class="Apple-converted-space">        </span>patterns.forEach(pattern =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const card = createPatternCard(pattern);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>patternsGrid.appendChild(card);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
