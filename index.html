@@ -1,0 +1,563 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en" class="scroll-smooth"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Interactive Guide to AI UX Patterns&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!--<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>Chosen Palette: Calm Tech (Warm Neutrals)</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Application Structure Plan: A multi-section, single-page application designed for exploration. It starts with a foundational overview, moving to core principles. The centerpiece is an interactive "Pattern Explorer" with filtering capabilities, allowing users to dive into specific categories and patterns. Subsequent sections cover domain-specific applications, ethical challenges (visualized with a chart), and future trends. This thematic, non-linear structure was chosen over a simple linear report to encourage user discovery, facilitate comparison, and make the dense information highly digestible and engaging, catering to designers and developers looking for specific information.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Visualization &amp; Content Choices:</p>
+<p class="p1"><span class="Apple-converted-space">    </span>- Traditional vs. AI UX: Goal: Compare. Method: Two-column interactive diagram (HTML/CSS). Interaction: Hover to reveal details. Justification: More dynamic than a static table.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>- Core Principles: Goal: Inform &amp; Relate. Method: Clickable cards. Interaction: Click to expand and reveal description. Justification: Links abstract principles to concrete patterns.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>- AI UX Pattern Explorer: Goal: Organize &amp; Explore. Method: Filterable grid of cards. Interaction: Click filters to see categories; click cards to see details in a modal. Justification: Manages a large amount of information effectively, making it the app's core tool.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>- Ethical Challenges: Goal: Relate. Method: Horizontal Bar Chart. Interaction: Hover tooltips provide context. Justification: Visually connects problems (challenges) to solutions (design patterns) in a quantifiable way. Library: Chart.js.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>- Future Trends: Goal: Inform &amp; Inspire. Method: Infographic-style cards. Interaction: Subtle hover animations. Justification: Makes forward-looking content visually appealing.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f9fafb; /* Lighter gray */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: color 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link::after {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>content: '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 2px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bottom: -4px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateX(-50%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #0d9488; /* Teal-600 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: width 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link.active, .nav-link:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #0d9488;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link.active::after, .nav-link:hover::after {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pattern-card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.3s ease, box-shadow 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pattern-card:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-5px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-bg {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: opacity 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.3s ease, opacity 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 800px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-left: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-right: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 400px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 50vh;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@media (min-width: 768px) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>height: 500px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-stone-50 text-stone-800"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Header &amp; Navigation --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header id="header" class="bg-stone-50/80 backdrop-blur-lg sticky top-0 z-40 border-b border-stone-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;nav class="container mx-auto px-4 sm:px-6 lg:px-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex items-center justify-between h-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex-shrink-0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="#hero" class="text-xl font-bold text-teal-700"&gt;AI UX Patterns&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="hidden md:block"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="ml-10 flex items-baseline space-x-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="#principles" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600"&gt;Principles&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="#explorer" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600"&gt;Pattern Explorer&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="#domains" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600"&gt;Domains&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="#ethics" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600"&gt;Ethics&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;a href="#future" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600"&gt;Future&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="md:hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-stone-500 hover:text-teal-600 hover:bg-stone-100 focus:outline-none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="sr-only"&gt;Open main menu&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="mobile-menu" class="md:hidden hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="px-2 pt-2 pb-3 space-y-1 sm:px-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#principles" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600"&gt;Principles&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#explorer" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600"&gt;Pattern Explorer&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#domains" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600"&gt;Domains&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#ethics" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600"&gt;Ethics&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#future" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600"&gt;Future&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Hero Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="hero" class="text-center py-16 md:py-24"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-4xl md:text-6xl font-bold tracking-tight text-stone-900"&gt;Navigating the Adaptive Frontier&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="mt-4 md:mt-6 max-w-2xl mx-auto text-lg md:text-xl text-stone-600"&gt;An interactive guide to the established User Experience (UX) patterns for creating intuitive, effective, and human-centered Artificial Intelligence.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-white p-6 rounded-xl shadow-lg border border-stone-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-xl font-semibold text-stone-500"&gt;Traditional UX&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="mt-2 text-stone-600"&gt;Deterministic, consistent outcomes based on fixed responses and explicit user commands.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-teal-600 text-white p-6 rounded-xl shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-xl font-semibold"&gt;AI-Driven UX&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="mt-2 text-teal-100"&gt;Probabilistic, adaptive interactions that are prediction-based and continuously learning.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Core Principles Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="principles" class="py-16 md:py-24"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl"&gt;Core Principles of AI UX&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="mt-4 max-w-2xl mx-auto text-lg text-stone-600"&gt;These foundational principles guide the design of effective and ethical AI experiences, ensuring technology empowers, not overwhelms.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="principles-grid" class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Pattern Explorer Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="explorer" class="py-16 md:py-24 bg-stone-100 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center container mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl"&gt;The Pattern Explorer&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="mt-4 max-w-3xl mx-auto text-lg text-stone-600"&gt;This interactive explorer allows you to discover the core AI UX patterns. Select a category to filter the patterns, and click on any card to learn more about its definition, importance, and real-world applications.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="pattern-filters" class="mt-12 flex justify-center flex-wrap gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="patterns-grid" class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Application Domains Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="domains" class="py-16 md:py-24"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl"&gt;Patterns in Practice: Application Domains&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="mt-4 max-w-3xl mx-auto text-lg text-stone-600"&gt;Explore how AI UX patterns are uniquely applied across different domains to solve specific user challenges.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="domain-tabs" class="mt-10 flex justify-center border-b border-stone-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="domain-content" class="mt-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Ethics Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="ethics" class="py-16 md:py-24 bg-stone-100 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center container mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl"&gt;Ethical Challenges &amp; Design Solutions&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="mt-4 max-w-3xl mx-auto text-lg text-stone-600"&gt;Visualizing the critical link between ethical challenges in AI and the design patterns used to mitigate them. A responsible design approach is not optional; it's essential for building user trust.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;canvas id="ethicsChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Future Trends Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="future" class="py-16 md:py-24"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl"&gt;The Future is Adaptive&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="mt-4 max-w-2xl mx-auto text-lg text-stone-600"&gt;Key trends shaping the next generation of human-AI interaction.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="future-trends-grid" class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="bg-stone-800 text-white"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;An Interactive Guide to AI UX Patterns.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-sm text-stone-400 mt-2"&gt;Synthesized from "Navigating the Adaptive Frontier" report.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Modal for Pattern Details --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="pattern-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-bg fixed inset-0 bg-black/50" aria-hidden="true"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-content relative w-full max-w-2xl max-h-[90vh] bg-white rounded-lg shadow-xl flex flex-col opacity-0 scale-95"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="p-6 border-b border-stone-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 id="modal-title" class="text-2xl font-bold text-stone-900"&gt;&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p id="modal-category" class="mt-1 text-sm font-semibold text-teal-600 uppercase tracking-wider"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="modal-body" class="p-6 overflow-y-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="p-4 bg-stone-50 border-t border-stone-200 text-right"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button id="modal-close" class="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"&gt;Close&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const appData = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>principles: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'autonomy', title: 'User Autonomy &amp; Control', icon: '🎮', description: 'Ensuring users maintain control over AI actions. This builds trust and agency by allowing users to guide, override, and fine-tune AI outputs to their needs.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'trust', title: 'Trust, Transparency &amp; Explainability', icon: '🔍', description: 'Making AI decisions clear and understandable. Users are more likely to adopt systems they can trust, which requires explaining the "why" behind AI actions.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'alignment', title: 'Data &amp; Model Alignment', icon: '🎯', description: 'Ensuring AI models are trained on data that reflects real-world user behaviors and contexts, leading to more relevant and accurate assistance.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'feedback', title: 'Continuous Feedback', icon: '🔄', description: 'Creating loops where user interactions continuously improve the AI. This transforms users into collaborators who actively shape the AI\'s evolution.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'safety', title: 'Evolving Safety &amp; Ethics', icon: '🛡️', description: 'Proactively designing for fairness, privacy, and accountability. This involves mitigating bias and protecting user data as a core part of the design process.' }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>patterns: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p1', category: 'input', title: 'Scoping', definition: 'Allows users to define the scope of their queries, improving the relevance and accuracy of AI-generated outputs.', importance: 'Crucial for preventing information overload and saving user time by avoiding irrelevant data.', example: 'A doctor scopes a diagnosis query to a specific patient\'s history or a pharmacist narrows drug interaction research to a demographic.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p2', category: 'input', title: 'Prompt Presets &amp; Templates', definition: 'Provides pre-defined prompts and customizable templates to guide AI interactions.', importance: 'Ensures more relevant and structured outputs, helping users formulate effective queries and improving result quality.', example: 'A healthcare analyst uses presets for patient data trends, ensuring standardized and accurate reports.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p3', category: 'input', title: 'Context Retention', definition: 'Enables AI systems to remember previous interactions and leverage that information in current conversations.', importance: 'Reduces the need for users to repeat information, saving time and improving the flow of communication.', example: 'An AI chatbot remembers details from previous patient consultations to provide more coherent follow-up advice.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p4', category: 'output', title: 'Refine Output', definition: 'Empowers users to quickly fine-tune AI-generated content through contextual menus or selection-based actions.', importance: 'Grants users greater control over the AI’s output, enhancing usability and trustworthiness by allowing iterative adjustments.', example: 'Selecting text in a generated summary and choosing "make it shorter" or "regenerate this paragraph".' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p5', category: 'output', title: 'Style Lenses / Temperature Knobs', definition: 'Provides users with controls to adjust the style, tone, or creativity level of AI-generated content.', importance: 'Allows users to tailor responses to specific contexts or preferences, ensuring the AI output matches the appropriate tone.', example: 'A doctor adjusts the tone of an AI-generated medical summary from "technical" to "patient-friendly".' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p6', category: 'output', title: 'Explainability Layers', definition: 'Offers multiple layers of explanations, allowing users to progressively understand how the AI arrived at a conclusion.', importance: 'Builds user confidence by enabling them to verify and comprehend the rationale behind AI recommendations or actions.', example: 'Clicking "Why this recommendation?" to see the key data points that influenced an AI\'s diagnostic suggestion.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p7', category: 'output', title: 'Human Verified vs AI-Generated', definition: 'Clearly differentiates between content that is purely AI-generated and content that has been human-verified.', importance: 'Enhances user confidence and encourages adoption by providing transparency about the origin and reliability of information.', example: 'An insurance portal uses a checkmark icon to show that an AI-generated claim summary has been approved by a human agent.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p8', category: 'collaboration', title: 'User-Driven Training', definition: 'Enables users to actively train the AI by providing granular feedback on its outputs.', importance: 'Ensures that AI systems learn from user expertise and adapt to specific organizational workflows, leading to more personalized results.', example: 'A radiologist provides feedback on AI-generated image analysis, correcting minor errors to improve future accuracy.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p9', category: 'collaboration', title: 'Co-pilot with Artifacts', definition: 'Positions the AI as a creative partner, collaborating with the user to build something together.', importance: 'Transforms the interaction from a transactional one to a co-creative one, where the user and AI work side-by-side.', example: 'Using an AI tool to co-create a UI layout in real-time, with the AI suggesting components and the user arranging them.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p10', category: 'collaboration', title: 'Branching', definition: 'Helps users explore cause and consequence chains by visualizing potential cause-effect relationships.', importance: 'Particularly useful for mapping effects, predicting outcomes, or identifying risks in complex scenarios.', example: 'A physician uses an AI tool to explore different treatment options for a patient, viewing the potential consequences of each path.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p11', category: 'proactive', title: 'Predictive Assistance', definition: 'Enables the system to anticipate user needs and offer proactive assistance based on historical data and context.', importance: 'Reduces cognitive load by offering timely suggestions, streamlining workflows, and improving overall efficiency.', example: 'An EHR system suggests relevant medical codes to a doctor during a consultation based on the entered symptoms.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p12', category: 'proactive', title: 'AI Daemons', definition: 'Involves creating distinct AI "personalities" with specific roles (e.g., critic, summarizer) to explore output from different perspectives.', importance: 'Makes AI interactions more engaging and helps users refine content, ensure accuracy, or simplify complex data.', example: 'Running a "Critical Daemon" on an AI-drafted research paper to find logical fallacies or weak arguments.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p13', category: 'trust', title: 'Data Privacy Controls', definition: 'Helps users manage and customize their data privacy settings, ensuring compliance and strengthening trust.', importance: 'Crucial where personal information sensitivity is paramount, empowering users to control their own data.', example: 'A patient portal allows users to restrict AI access to specific parts of their health history.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p14', category: 'trust', title: 'Error Recovery', definition: 'Offers users clear mechanisms to easily recover from errors, missteps, or unintended actions.', importance: 'Maintains workflow continuity and encourages exploration by removing the fear of irreversible mistakes.', example: 'An "Undo" button to revert an incorrect patient vital entered by an AI transcription service.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ id: 'p15', category: 'trust', title: 'Trust Indicators', definition: 'UI elements designed to give users confidence that the AI\'s results are ethical, accurate, and trustworthy.', importance: 'Builds user confidence by providing clear signals of reliability, such as verifiable sources.', example: 'An AI-generated summary includes clickable citations linking back to the original source documents.' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>domains: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>id: 'conversational',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: 'Conversational Interfaces',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>description: 'Patterns that create fluid and helpful interactions in chatbots and virtual assistants.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>patterns: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: 'Intent-Driven Shortcuts', description: 'AI provides personalized suggestions or commands relevant to the conversation context, helping users discover functionality. Example: An e-commerce bot suggesting specific products when a user says "I need a gift".' },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: 'In-chat Elements', description: 'Embedding rich, interactive elements like tables, charts, or code blocks directly into the chat flow. Example: Notion AI rendering a table directly in the conversation.' },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: 'Co-pilot with Artifacts', description: 'The AI acts as a creative partner to build something together, like drafting content or designing layouts. Example: Using ChatGPT Canvas to sketch out a user flow with AI assistance.' }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>id: 'generative',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: 'Generative AI Applications',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>description: 'Patterns for guiding user input and managing output in applications that create new content.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>patterns: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: 'Simplifying Onboarding', description: 'Using clear tutorials and guides to help users understand the AI\'s capabilities and how to write effective prompts. Example: An initial walkthrough showing example prompts for an image generator.' },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: 'Iterative Exploration', description: 'Allowing users to refine or regenerate outputs multiple times, fostering a sense of control and collaboration. Example: A "Try Again" button or showing multiple image variations for a single prompt.' },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: 'Input Guidance', description: 'Providing templates, validation, or prompt suggestions to help users of all expertise levels provide high-quality input. Example: A marketing copy generator with fields for "Product Name," "Target Audience," and "Key Benefits".' }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>id: 'recommendation',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: 'Recommendation Systems',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>description: 'Patterns for suggesting relevant content, products, or services to users.',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>patterns: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: 'Explainable Recommendations', description: 'Showing users *why* an item was recommended to build trust and provide context. Example: LinkedIn explaining a job recommendation is "based on your skills and past job searches".' },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: 'Hybrid Systems', description: 'Combining multiple recommendation algorithms (e.g., collaborative and content-based filtering) to improve accuracy and mitigate weaknesses like the "cold start" problem. Example: Netflix using viewing history and movie metadata for suggestions.' },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{ title: 'Retrieval-Augmented Generation (RAG)', description: 'Integrating real-time external knowledge into recommendations to make them more contextually rich and accurate. Example: An e-commerce site retrieving past purchases to generate highly tailored new product suggestions.' }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>futureTrends: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ title: 'Anticipatory Design', icon: '🔮', description: 'AI shifts from reactive to proactive, anticipating user needs and solving problems before they are explicitly stated, moving towards "no-interface" systems.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ title: 'Hyper-Personalization', icon: '✨', description: 'Generative AI enables unprecedented tailoring of interfaces, content, and workflows based on continuous learning from individual user interactions.' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{ title: 'Democratization &amp; Accessibility', icon: '🌐', description: 'Low-code/no-code environments make AI tools accessible to a broader audience, while AI-driven adaptation makes digital experiences more inclusive for users with disabilities.' }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const principlesGrid = document.getElementById('principles-grid');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const patternFilters = document.getElementById('pattern-filters');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const patternsGrid = document.getElementById('patterns-grid');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const domainTabs = document.getElementById('domain-tabs');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const domainContent = document.getElementById('domain-content');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const futureTrendsGrid = document.getElementById('future-trends-grid');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const modal = document.getElementById('pattern-modal');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const modalBg = modal.querySelector('.modal-bg');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const modalClose = document.getElementById('modal-close');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const modalTitle = document.getElementById('modal-title');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const modalCategory = document.getElementById('modal-category');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const modalBody = document.getElementById('modal-body');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Render Principles</p>
+<p class="p1"><span class="Apple-converted-space">            </span>appData.principles.forEach(p =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const div = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>div.className = 'bg-white p-6 rounded-xl shadow-md border border-stone-200 text-center';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>div.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-4xl"&gt;${p.icon}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="mt-4 text-xl font-semibold text-stone-900"&gt;${p.title}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="mt-2 text-stone-600"&gt;${p.description}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>principlesGrid.appendChild(div);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Render Pattern Filters and Grid</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const categories = ['all', ...new Set(appData.patterns.map(p =&gt; p.category))];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>categories.forEach(cat =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const button = document.createElement('button');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>button.dataset.filter = cat;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>button.className = 'filter-btn px-4 py-2 text-sm font-semibold rounded-full transition-colors ' + (cat === 'all' ? 'bg-teal-600 text-white' : 'bg-white text-stone-600 hover:bg-teal-100');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>button.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>patternFilters.appendChild(button);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const renderPatterns = (filter = 'all') =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>patternsGrid.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const filteredPatterns = filter === 'all' ? appData.patterns : appData.patterns.filter(p =&gt; p.category === filter);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>filteredPatterns.forEach(p =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const div = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>div.className = 'pattern-card bg-white p-6 rounded-xl shadow-lg border border-stone-200 cursor-pointer';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>div.dataset.patternId = p.id;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>div.dataset.category = p.category;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>div.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4 class="font-bold text-lg text-stone-900"&gt;${p.title}&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="mt-2 text-sm text-stone-600"&gt;${p.definition}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="mt-4 inline-block text-xs font-semibold text-teal-600 uppercase tracking-wider"&gt;${p.category}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>patternsGrid.appendChild(div);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>patternFilters.addEventListener('click', e =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (e.target.classList.contains('filter-btn')) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const filter = e.target.dataset.filter;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>document.querySelectorAll('.filter-btn').forEach(btn =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>btn.classList.remove('bg-teal-600', 'text-white');</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>btn.classList.add('bg-white', 'text-stone-600', 'hover:bg-teal-100');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>e.target.classList.add('bg-teal-600', 'text-white');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>e.target.classList.remove('bg-white', 'text-stone-600', 'hover:bg-teal-100');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>renderPatterns(filter);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>patternsGrid.addEventListener('click', e =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const card = e.target.closest('.pattern-card');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (card) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const patternId = card.dataset.patternId;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const pattern = appData.patterns.find(p =&gt; p.id === patternId);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (pattern) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>modalTitle.textContent = pattern.title;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>modalCategory.textContent = pattern.category;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>modalBody.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-stone-700"&gt;${pattern.definition}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h5 class="font-semibold text-stone-800 mt-4 mb-1"&gt;Why It's Important&lt;/h5&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-stone-700"&gt;${pattern.importance}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h5 class="font-semibold text-stone-800 mt-4 mb-1"&gt;Example&lt;/h5&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-stone-700 bg-stone-100 p-3 rounded-md"&gt;${pattern.example}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>modal.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>modal.classList.add('flex');</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>modal.querySelector('.modal-content').classList.remove('opacity-0', 'scale-95');</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>modal.querySelector('.modal-bg').classList.remove('opacity-0');</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}, 10);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const closeModal = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>modal.querySelector('.modal-content').classList.add('opacity-0', 'scale-95');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>modal.querySelector('.modal-bg').classList.add('opacity-0');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>modal.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>modal.classList.remove('flex');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}, 300);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalClose.addEventListener('click', closeModal);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalBg.addEventListener('click', closeModal);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderPatterns();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Render Domain Tabs &amp; Content</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const renderDomainContent = (domainId) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const domain = appData.domains.find(d =&gt; d.id === domainId);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (!domain) return;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>domainContent.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="max-w-4xl mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-center text-stone-600"&gt;${domain.description}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="mt-6 space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>${domain.patterns.map(p =&gt; `</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="bg-white p-4 rounded-lg border border-stone-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h4 class="font-semibold text-stone-800"&gt;${p.title}&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p class="text-sm text-stone-600 mt-1"&gt;${p.description}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>`).join('')}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.querySelectorAll('.domain-tab').forEach(tab =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>tab.classList.remove('text-teal-600', 'border-teal-600');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>tab.classList.add('text-stone-500', 'border-transparent', 'hover:text-stone-700', 'hover:border-stone-300');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const activeTab = document.querySelector(`.domain-tab[data-domain='${domainId}']`);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (activeTab) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>activeTab.classList.add('text-teal-600', 'border-teal-600');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>activeTab.classList.remove('text-stone-500', 'border-transparent', 'hover:text-stone-700', 'hover:border-stone-300');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>appData.domains.forEach(domain =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const button = document.createElement('button');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>button.className = 'domain-tab py-4 px-1 border-b-2 font-medium text-sm';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>button.textContent = domain.title;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>button.dataset.domain = domain.id;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>domainTabs.appendChild(button);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>domainTabs.addEventListener('click', e =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (e.target.classList.contains('domain-tab')) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>renderDomainContent(e.target.dataset.domain);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderDomainContent(appData.domains[0].id);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Render Future Trends</p>
+<p class="p1"><span class="Apple-converted-space">            </span>appData.futureTrends.forEach(trend =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const div = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>div.className = 'text-center p-6 bg-white rounded-xl shadow-md border border-stone-200';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>div.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-5xl"&gt;${trend.icon}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="mt-5 text-xl font-semibold text-stone-900"&gt;${trend.title}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="mt-2 text-stone-600"&gt;${trend.description}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>futureTrendsGrid.appendChild(div);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Ethics Chart</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const ctx = document.getElementById('ethicsChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const ethicsData = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labels: ['AI Bias', 'Lack of Transparency', 'User Privacy', 'Uncertainty Mgmt', '"Uncanny Valley"'],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>label: 'Related Design Solutions',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: [4, 4, 4, 3, 3],<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>backgroundColor: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'rgba(204, 102, 102, 0.6)',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'rgba(102, 153, 204, 0.6)',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'rgba(102, 204, 153, 0.6)',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'rgba(255, 159, 64, 0.6)',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'rgba(153, 102, 255, 0.6)'</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>borderColor: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'rgba(204, 102, 102, 1)',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'rgba(102, 153, 204, 1)',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'rgba(102, 153, 204, 1)',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'rgba(255, 159, 64, 1)',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'rgba(153, 102, 255, 1)'</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>borderWidth: 1</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>new Chart(ctx, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'bar',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: ethicsData,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>indexAxis: 'y',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>legend: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>display: false</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>title: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>display: true,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>text: 'Number of Key Design Solutions per Ethical Challenge'</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>tooltip: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>callbacks: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>label: function(context) {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>let label = context.dataset.label || '';</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>if (label) {</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>label += ': ';</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>if (context.parsed.x !== null) {</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>label += context.parsed.x + ' patterns';</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>return label;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>x: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>beginAtZero: true,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>title: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>display: true,</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>text: 'Number of Solution Patterns'</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Mobile menu toggle</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const mobileMenuButton = document.getElementById('mobile-menu-button');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const mobileMenu = document.getElementById('mobile-menu');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>mobileMenuButton.addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>mobileMenu.classList.toggle('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>mobileMenu.addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>mobileMenu.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Nav link active state on scroll</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const sections = document.querySelectorAll('section');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const navLinks = document.querySelectorAll('.nav-link');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const observer = new IntersectionObserver((entries) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>entries.forEach(entry =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (entry.isIntersecting) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>navLinks.forEach(link =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>link.classList.remove('active');</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>if (link.getAttribute('href').substring(1) === entry.target.id) {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>link.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, { rootMargin: '-50% 0px -50% 0px' });</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>sections.forEach(section =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>observer.observe(section);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
